@@ -1,6 +1,6 @@
 # Stock Portfolio Tracker
 
-The Stock Portfolio Tracker is a web application that allows users to manage their investment portfolios. It provides features for user authentication, portfolio creation, investment management, real-time stock price updates, transaction history, and alerts/notifications.
+The Stock Portfolio Tracker is a Rest API that allows users to manage their investment portfolios. It provides features for user authentication, portfolio creation, investment management, real-time stock price updates, transaction history, and alerts/notifications.
 
 ---
 
@@ -64,7 +64,7 @@ The Stock Portfolio Tracker is a web application that allows users to manage the
 
    - On your portfolio dashboard, view the real-time updates for each investment.
 
-6. **Transaction History:**
+6. **Transaction History(if implemented):**
 
    - Access the "Transaction History" section in your portfolio to view all buy, sell, and dividend transactions.
 
