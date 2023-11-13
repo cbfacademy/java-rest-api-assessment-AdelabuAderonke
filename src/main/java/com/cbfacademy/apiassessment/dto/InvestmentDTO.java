@@ -1,9 +1,8 @@
-package com.cbfacademy.apiassessment.entity;
+package com.cbfacademy.apiassessment.dto;
 
 import java.util.Date;
 
-public class Investment {
-    private long id;
+public class InvestmentDTO {
     private String name;
     private String symbol;
     private String issuer;
@@ -11,7 +10,7 @@ public class Investment {
     private double purchasePrice;
     private int Quantity;
     private double Currency;
-    private double currentPrice;
-    private double  currentMarketValue;
+    //private double currentPrice;
+    //private double  currentMarketValue;
 
 }

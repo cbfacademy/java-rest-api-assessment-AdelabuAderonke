@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment.entity;
+package com.cbfacademy.apiassessment.model;
 
 import java.util.Date;
 
