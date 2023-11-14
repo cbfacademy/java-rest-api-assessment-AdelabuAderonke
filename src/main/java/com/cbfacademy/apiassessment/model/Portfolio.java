@@ -18,7 +18,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Entity
 public class Portfolio {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(name = "name", unique = true, nullable = false)
     private String portfolioName;
@@ -28,7 +28,7 @@ public class Portfolio {
     private String description;
     @Column(name = "createdAt")
     private Date createdAt;
-    @OneToMany(mappedBy = "portfolio")
+    @OneToMany(mappedBy = "portfolio",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Investment> investments = new HashSet<>();
     public Portfolio(String portfolioName, Long userId, String description) { //jpa rules
         this.portfolioName = portfolioName; this.userId = userId; this.description = description;

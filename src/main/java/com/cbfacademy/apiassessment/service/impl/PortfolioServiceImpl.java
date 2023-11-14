@@ -5,7 +5,7 @@ import com.cbfacademy.apiassessment.exception.ResourceNotFoundException;
 import com.cbfacademy.apiassessment.dto.PortfolioDTO;
 import com.cbfacademy.apiassessment.repository.PortfolioRepository;
 import com.cbfacademy.apiassessment.service.PortfolioService;
-import com.cbfacademy.apiassessment.utils.FileUtils;
+import com.cbfacademy.apiassessment.utils.PortfolioFileUtils;
 
 
 
@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-//im basically reimporting the dependecnies
+//im basically reimporting the dependecies
 //done
-//Now try to send a request from post man let me see
+
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
     private final PortfolioRepository portfolioRepository;
@@ -26,7 +26,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     public PortfolioServiceImpl(PortfolioRepository portfolioRepository,List<Portfolio> portfolios) {
         this.portfolioRepository = portfolioRepository;
         // Load existing portfolios from JSON file
-        this.portfolios = FileUtils.readPortfoliosFromJson();
+        this.portfolios = PortfolioFileUtils.readPortfoliosFromJson();
         if (this.portfolios == null) {
             // If file doesn't exist or error reading, initialize with an empty list
             this.portfolios = new ArrayList<>();
@@ -63,7 +63,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         Portfolio newPortfolio = portfolioRepository.save(portfolio);
 
         //for JSON file
-        portfolios.add(newPortfolio); // Assuming 'portfolios' is the list you're managing
+        portfolios.add(portfolio); // Assuming 'portfolios' is the list you're managing
         saveToJSON(); // Save to JSON
         PortfolioDTO portfolioResponse = mapToDTO(newPortfolio);
 
@@ -124,12 +124,6 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     @Override
     public void saveToJSON() {
-        FileUtils.writePortfolioToJson(portfolios);
+        PortfolioFileUtils.writePortfolioToJson(portfolios);
     }
-
-    // private Long generateNextId() {
-    //     // Find the maximum ID and increment it
-    //     Long maxId = portfolios.stream().map(Portfolio::getId).max(Long::compare).orElse(0L);
-    //     return maxId + 1;
-    // }
 }

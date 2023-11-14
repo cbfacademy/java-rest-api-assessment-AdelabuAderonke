@@ -25,13 +25,19 @@ public class Investment {
     private Date purchaseDate;
     private double purchasePrice;
     private int quantity;
-    private double currency;
+    private double investmentAmount;
     private double currentPrice;
     private double currentMarketValue;
 
-    // Constructors, getters, setters, and other methods...
+    @PrePersist
+    @PreUpdate
+    private void calculateMarketValue() {
+        this.currentMarketValue = this.quantity * this.currentPrice;
+    }
+
+
     public Investment(Portfolio portfolio, String name, String symbol, String issuer, Date purchaseDate,
-                      double purchasePrice, int quantity, double currency, double currentPrice, double currentMarketValue) {
+                      double purchasePrice, int quantity, double investmentAmount, double currentPrice, double currentMarketValue) {
         this.portfolio = portfolio;
         this.name = name;
         this.symbol = symbol;
@@ -39,8 +45,8 @@ public class Investment {
         this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
         this.quantity = quantity;
-        this.currency = currency;
+        this.investmentAmount = investmentAmount;
         this.currentPrice = currentPrice;
-        this.currentMarketValue = currentMarketValue;
+        calculateMarketValue();
     }
 }

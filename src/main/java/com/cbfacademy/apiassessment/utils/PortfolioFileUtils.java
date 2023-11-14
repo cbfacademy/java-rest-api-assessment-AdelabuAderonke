@@ -8,7 +8,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class FileUtils {
+public class PortfolioFileUtils {
     private static  final String filePath = "portfolios.json";
     public static List<Portfolio> readPortfoliosFromJson(){
         doesFileExists();
@@ -39,4 +39,5 @@ public class FileUtils {
             }
         }
     }
+
 }
