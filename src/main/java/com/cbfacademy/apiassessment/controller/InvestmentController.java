@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class InvestmentController {
 
     private final InvestmentService investmentService;
+    @Autowired
 
     public InvestmentController(InvestmentService investmentService) {
         this.investmentService = investmentService;

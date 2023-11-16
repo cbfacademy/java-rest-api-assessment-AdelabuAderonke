@@ -3,9 +3,13 @@ package com.cbfacademy.apiassessment.dto;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+
+import java.util.Date;
+
 @Getter
 @Setter
 public class InvestmentDTO {
+    private long id;
     @NonNull
     private String name;
     @NonNull
@@ -19,7 +23,9 @@ public class InvestmentDTO {
     private int quantity;
     @NonNull
     private double investmentAmount;
-    //private double currentPrice;
-    //private double  currentMarketValue;
+    @NonNull
+    private double currentPrice;
+    @NonNull
+    private double  currentMarketValue;
 
 }

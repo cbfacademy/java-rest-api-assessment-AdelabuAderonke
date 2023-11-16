@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cbfacademy.apiassessment.utils.PortfolioFileUtils;
 import org.springframework.stereotype.Service;
 //im basically reimporting the dependecies
 //done
@@ -49,6 +50,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         portfolio.setPortfolioName(portfolioDTO.getPortfolioName());
         portfolio.setDescription(portfolioDTO.getDescription());
         portfolio.setUserId(portfolioDTO.getUserId());
+        portfolio.setId(portfolio.getId());
         // Set created_at with the current date
         portfolio.setCreatedAt(new Date());
         return portfolio;

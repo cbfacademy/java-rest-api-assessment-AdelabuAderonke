@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @Import(RestTemplateConfig.class)
-@RestController
-//@ComponentScan(basePackages = "com.cbfacademy.apiassessment")
+@ComponentScan(basePackages ="com.cbfacademy.apiassessment")
 public class App {
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);

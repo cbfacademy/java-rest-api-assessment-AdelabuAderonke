@@ -22,7 +22,7 @@ public class Investment {
     private String name;
     private String symbol;
     private String issuer;
-    private Date purchaseDate;
+    //private Date purchaseDate;
     private double purchasePrice;
     private int quantity;
     private double investmentAmount;
@@ -36,13 +36,13 @@ public class Investment {
     }
 
 
-    public Investment(Portfolio portfolio, String name, String symbol, String issuer, Date purchaseDate,
+    public Investment(Portfolio portfolio, String name, String symbol, String issuer, //Date purchaseDate,
                       double purchasePrice, int quantity, double investmentAmount, double currentPrice, double currentMarketValue) {
         this.portfolio = portfolio;
         this.name = name;
         this.symbol = symbol;
         this.issuer = issuer;
-        this.purchaseDate = purchaseDate;
+        //this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
         this.quantity = quantity;
         this.investmentAmount = investmentAmount;

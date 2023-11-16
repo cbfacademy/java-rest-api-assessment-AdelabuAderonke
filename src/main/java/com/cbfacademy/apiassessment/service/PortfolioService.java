@@ -2,9 +2,10 @@ package com.cbfacademy.apiassessment.service;
 
 import com.cbfacademy.apiassessment.dto.PortfolioDTO;
 import com.cbfacademy.apiassessment.model.Portfolio;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface PortfolioService {
     PortfolioDTO getPortfolioById(long id);
     List<PortfolioDTO> getAllPortfolios();
