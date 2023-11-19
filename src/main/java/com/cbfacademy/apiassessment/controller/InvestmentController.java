@@ -43,4 +43,14 @@ public class InvestmentController {
         InvestmentDTO updatedInvestment = investmentService.updateInvestment(portfolioId, investmentId, updateInvestment);
         return new ResponseEntity<>(updatedInvestment, HttpStatus.OK);
     }
+    @DeleteMapping("/portfolio/{portfolioId}/investments/{investmentId}")
+    public ResponseEntity<String> deleteInvestment(@PathVariable(value="portfolioId") long portfolioId,
+                                                   @PathVariable(value="investmentId") long investmentId){
+        investmentService.deleteInvestment(portfolioId,investmentId);
+        return new ResponseEntity<>("Investment deleted successfully", HttpStatus.OK);
+    }
+    @GetMapping("/portfolio/investments/search")
+    public List<InvestmentDTO> searchInvestments(@RequestParam String keyword) {
+        return investmentService.searchInvestments(keyword);
+    }
 }

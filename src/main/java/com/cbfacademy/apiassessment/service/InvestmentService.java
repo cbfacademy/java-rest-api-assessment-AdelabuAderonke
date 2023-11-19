@@ -11,6 +11,7 @@ public interface InvestmentService {
     InvestmentDTO createInvestment(long portfolioId, InvestmentDTO investmentDTO);
     List<InvestmentDTO> getInvestmentByPortfolioId(long portfolioId);
     InvestmentDTO getInvestmentById(long portfolioId,long investmentId);
-    InvestmentDTO updateInvestment(Long portfolioId,long investmentId, InvestmentDTO updatedInvestment);
-    void DeleteInvestment(long portfolioId, long investmentId);
+    InvestmentDTO updateInvestment(long portfolioId,long investmentId, InvestmentDTO updatedInvestment);
+    void deleteInvestment(long portfolioId, long investmentId);
+    List<InvestmentDTO> searchInvestments(String query);
 }

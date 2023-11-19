@@ -95,7 +95,7 @@ public class InvestmentServiceImpl implements InvestmentService {
     }
 
     @Override
-    public InvestmentDTO updateInvestment(Long portfolioId, long investmentId, InvestmentDTO investmentRequest) {
+    public InvestmentDTO updateInvestment(long portfolioId, long investmentId, InvestmentDTO investmentRequest) {
         Portfolio portfolio = portfolioRepository.findById(portfolioId)
                 .orElseThrow(() -> new ResourceNotFoundException("Portfolio", "id", portfolioId));
         //retrieve investment by Id
@@ -108,15 +108,15 @@ public class InvestmentServiceImpl implements InvestmentService {
         investment.setSymbol(investmentRequest.getSymbol());
         investment.setQuantity(investmentRequest.getQuantity());
         investment.setPurchasePrice(investmentRequest.getPurchasePrice());
-        double investmentAmount = investmentRequest.getPurchasePrice() * investmentRequest.getQuantity();
-        investment.setInvestmentAmount(investmentAmount);
-
-        double currentPrice = marketValueService.getCurrentMarketValue(investmentRequest.getSymbol());
-        if(currentPrice == 0){
-            investment.setCurrentPrice(0);
-        }
-        investment.setCurrentPrice(currentPrice);
-        investment.setCurrentMarketValue(investmentRequest.getQuantity() * currentPrice);
+//        double investmentAmount = investmentRequest.getPurchasePrice() * investmentRequest.getQuantity();
+//        investment.setInvestmentAmount(investmentAmount);
+//
+//        double currentPrice = marketValueService.getCurrentMarketValue(investmentRequest.getSymbol());
+//        if(currentPrice == 0){
+//            investment.setCurrentPrice(0);
+//        }
+//        investment.setCurrentPrice(currentPrice);
+//        investment.setCurrentMarketValue(investmentRequest.getQuantity() * currentPrice);
 
         // Update JSON file
 //        for (InvestmentDTO investment1 : investments) {
@@ -134,8 +134,21 @@ public class InvestmentServiceImpl implements InvestmentService {
     }
 
     @Override
-    public void DeleteInvestment(long portfolioId, long investmentId) {
-
+    public void deleteInvestment(long portfolioId, long investmentId) {
+        Portfolio portfolio = portfolioRepository.findById(portfolioId)
+                .orElseThrow(() -> new ResourceNotFoundException("Portfolio", "id", portfolioId));
+        //retrieve investment by Id
+        Investment investment = investmentRepository.findById(investmentId).orElseThrow(()-> new ResourceNotFoundException("Investment","id",investmentId));
+        if(investment.getPortfolio().getId() != portfolio.getId()){
+            throw new StockPortfolioAPIException(HttpStatus.BAD_REQUEST,"Investment does not belong to portfolio");
+        }
+        investmentRepository.delete(investment);
+    }
+    public List<InvestmentDTO> searchInvestments(String query) {
+        List<Investment> investmentList = investmentRepository.searchInvestments(query);
+        return investmentList.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
     }
 
     private InvestmentDTO mapToDTO(Investment investment) {

@@ -136,19 +136,8 @@ public class PortfolioServiceImpl implements PortfolioService {
         portfolios.removeIf(p -> p.getId() == id);
         // Save to JSON
         saveToJSON();
-    }
 
-//    @Override
-//    public List<PortfolioDTO> searchPortfolios(String keyword) {
-//        List<Portfolio> portfoliosDB = portfolioRepository.findByPortfolioNameContainingIgnoreCase(keyword);
-//        List<Portfolio> matchingPortfolios = portfolios.stream()
-//                .filter(portfolio -> portfolio.getPortfolioName().toLowerCase().contains(keyword.toLowerCase()))
-//                .collect(Collectors.toList());
-//
-//        matchingPortfolios.addAll(portfoliosDB);
-//
-//        return matchingPortfolios.stream().map(this::mapToDTO).collect(Collectors.toList());
-//    }
+    }
 
     @Override
     public void saveToJSON() {

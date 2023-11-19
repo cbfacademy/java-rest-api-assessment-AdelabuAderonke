@@ -2,12 +2,12 @@ package com.cbfacademy.apiassessment.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class MarketValueResponse {
-
     @JsonProperty("Global Quote")
     private GlobalQuote globalQuote;
 
@@ -18,9 +18,9 @@ public class MarketValueResponse {
     public static class GlobalQuote {
 
         @JsonProperty("05. price")
-        private Double currentPrice;  // Use Double instead of double to allow null
+        private double currentPrice;
 
-        public Double getCurrentPrice() {
+        public double getCurrentPrice() {
             return currentPrice;
         }
     }
