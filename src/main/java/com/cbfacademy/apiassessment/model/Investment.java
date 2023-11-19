@@ -10,7 +10,11 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Investment extends BaseEntity {
+public class Investment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "portfolio_id", nullable = false)
     private Portfolio portfolio;
