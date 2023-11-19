@@ -1,14 +1,17 @@
 package com.cbfacademy.apiassessment.service;
 
-import com.cbfacademy.apiassessment.payload.PortfolioDTO;
+import com.cbfacademy.apiassessment.dto.PortfolioDTO;
+import com.cbfacademy.apiassessment.model.Portfolio;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface PortfolioService {
-    PortfolioDTO createPortfolio(PortfolioDTO portfolioDTO);
-    List<PortfolioDTO> getAllPortfolios();
     PortfolioDTO getPortfolioById(long id);
+    List<PortfolioDTO> getAllPortfolios();
+    PortfolioDTO createPortfolio(PortfolioDTO portfolioDTO);
     PortfolioDTO updatePortfolio(PortfolioDTO portfolioDTO, long id);
     void deletePortfolio(long id);
-    void saveToJSON(List<PortfolioDTO> portfolioDTOS);
+    //List<PortfolioDTO> searchPortfolios(String keyword);
+    void saveToJSON();
 }
