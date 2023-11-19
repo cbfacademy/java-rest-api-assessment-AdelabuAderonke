@@ -16,10 +16,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Portfolio {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Portfolio extends BaseEntity{
     @Column(name = "name", unique = true, nullable = false)
     private String portfolioName;
     @Column(name = "userId", unique = true, nullable = false)
