@@ -12,5 +12,6 @@ public interface PortfolioService {
     PortfolioDTO createPortfolio(PortfolioDTO portfolioDTO);
     PortfolioDTO updatePortfolio(PortfolioDTO portfolioDTO, long id);
     void deletePortfolio(long id);
+    //List<PortfolioDTO> searchPortfolios(String keyword);
     void saveToJSON();
 }

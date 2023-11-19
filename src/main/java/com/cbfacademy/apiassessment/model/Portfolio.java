@@ -30,8 +30,8 @@ public class Portfolio {
     private Date createdAt;
     @OneToMany(mappedBy = "portfolio",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Investment> investments = new HashSet<>();
-    public Portfolio(String portfolioName, Long userId, String description) { //jpa rules
-        this.portfolioName = portfolioName; this.userId = userId; this.description = description;
-
-  }
+//    public Portfolio(String portfolioName, Long userId, String description) { //jpa rules
+//        this.portfolioName = portfolioName; this.userId = userId; this.description = description;
+//
+//  }
 }

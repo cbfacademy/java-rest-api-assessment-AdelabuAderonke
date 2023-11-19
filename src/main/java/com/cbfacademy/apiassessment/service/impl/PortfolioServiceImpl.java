@@ -1,5 +1,7 @@
 package com.cbfacademy.apiassessment.service.impl;
 
+import com.cbfacademy.apiassessment.dto.InvestmentDTO;
+import com.cbfacademy.apiassessment.model.Investment;
 import com.cbfacademy.apiassessment.model.Portfolio;
 import com.cbfacademy.apiassessment.exception.ResourceNotFoundException;
 import com.cbfacademy.apiassessment.dto.PortfolioDTO;
@@ -12,20 +14,23 @@ import com.cbfacademy.apiassessment.utils.PortfolioFileUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.cbfacademy.apiassessment.utils.PortfolioFileUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-//im basically reimporting the dependecies
-//done
-
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
     private final PortfolioRepository portfolioRepository;
+    private ModelMapper mapper;
     private List<Portfolio> portfolios;
 
-    public PortfolioServiceImpl(PortfolioRepository portfolioRepository,List<Portfolio> portfolios) {
+    public PortfolioServiceImpl(PortfolioRepository portfolioRepository,
+                                ModelMapper mapper,
+                                List<Portfolio> portfolios) {
         this.portfolioRepository = portfolioRepository;
+        this.mapper = mapper;
         // Load existing portfolios from JSON file
         this.portfolios = PortfolioFileUtils.readPortfoliosFromJson();
         if (this.portfolios == null) {
@@ -36,23 +41,32 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     // mapToDTO
     private PortfolioDTO mapToDTO(Portfolio portfolio) {
-        PortfolioDTO portfolioDTO = new PortfolioDTO();
-        //portfolioDTO.setId(portfolio.getId());
-        portfolioDTO.setPortfolioName(portfolio.getPortfolioName());
-        portfolioDTO.setUserId(portfolio.getUserId());
-        portfolioDTO.setDescription(portfolio.getDescription());
+        PortfolioDTO portfolioDTO = mapper.map(portfolio,PortfolioDTO.class);
+//        Set<InvestmentDTO> investmentDTOSet = portfolio.getInvestments()
+//                .stream()
+//                .map(investment -> mapToDTO(investment))
+//                .collect(Collectors.toSet());
+//        portfolioDTO.setInvestmentDTOSet(investmentDTOSet);
+//        //portfolioDTO.setId(portfolio.getId());
+//        portfolioDTO.setPortfolioName(portfolio.getPortfolioName());
+//        portfolioDTO.setUserId(portfolio.getUserId());
+//        portfolioDTO.setDescription(portfolio.getDescription());
         return portfolioDTO;
     }
 
+    private InvestmentDTO mapToDTO(Investment investment) {
+        InvestmentDTO investmentDTO = mapper.map(investment, InvestmentDTO.class);
+        return  investmentDTO;
+    }
     // mapToEntity
     private Portfolio mapToEntity(PortfolioDTO portfolioDTO) {
-        Portfolio portfolio = new Portfolio();
-        portfolio.setPortfolioName(portfolioDTO.getPortfolioName());
-        portfolio.setDescription(portfolioDTO.getDescription());
-        portfolio.setUserId(portfolioDTO.getUserId());
-        portfolio.setId(portfolio.getId());
-        // Set created_at with the current date
-        portfolio.setCreatedAt(new Date());
+        Portfolio portfolio = mapper.map(portfolioDTO,Portfolio.class);
+//        portfolio.setPortfolioName(portfolioDTO.getPortfolioName());
+//        portfolio.setDescription(portfolioDTO.getDescription());
+//        portfolio.setUserId(portfolioDTO.getUserId());
+//        portfolio.setId(portfolio.getId());
+//        // Set created_at with the current date
+//        portfolio.setCreatedAt(new Date());
         return portfolio;
 
     }
@@ -123,6 +137,18 @@ public class PortfolioServiceImpl implements PortfolioService {
         // Save to JSON
         saveToJSON();
     }
+
+//    @Override
+//    public List<PortfolioDTO> searchPortfolios(String keyword) {
+//        List<Portfolio> portfoliosDB = portfolioRepository.findByPortfolioNameContainingIgnoreCase(keyword);
+//        List<Portfolio> matchingPortfolios = portfolios.stream()
+//                .filter(portfolio -> portfolio.getPortfolioName().toLowerCase().contains(keyword.toLowerCase()))
+//                .collect(Collectors.toList());
+//
+//        matchingPortfolios.addAll(portfoliosDB);
+//
+//        return matchingPortfolios.stream().map(this::mapToDTO).collect(Collectors.toList());
+//    }
 
     @Override
     public void saveToJSON() {

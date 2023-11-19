@@ -1,31 +1,41 @@
 package com.cbfacademy.apiassessment.dto;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class InvestmentDTO {
     private long id;
-    @NonNull
+
     private String name;
-    @NonNull
+
     private String symbol;
-    @NonNull
+
     private String issuer;
     //private Date purchaseDate;
-    @NonNull
+
     private double purchasePrice;
-    @NonNull
+
     private int quantity;
-    @NonNull
+
     private double investmentAmount;
-    @NonNull
+
     private double currentPrice;
-    @NonNull
+
     private double  currentMarketValue;
 
+    public InvestmentDTO(String name, String symbol, String issuer, double purchasePrice, int quantity, double investmentAmount, double currentPrice, double currentMarketValue) {
+        this.name = name;
+        this.symbol = symbol;
+        this.issuer = issuer;
+        this.purchasePrice = purchasePrice;
+        this.quantity = quantity;
+        this.investmentAmount = investmentAmount;
+        this.currentPrice = currentPrice;
+        this.currentMarketValue = currentMarketValue;
+    }
 }
