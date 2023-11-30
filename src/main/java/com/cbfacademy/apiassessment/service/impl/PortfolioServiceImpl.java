@@ -3,6 +3,7 @@ package com.cbfacademy.apiassessment.service.impl;
 import com.cbfacademy.apiassessment.dto.InvestmentDTO;
 import com.cbfacademy.apiassessment.model.Investment;
 import com.cbfacademy.apiassessment.model.Portfolio;
+import com.cbfacademy.apiassessment.exception.PortfolioAlreadyExistsException;
 import com.cbfacademy.apiassessment.exception.ResourceNotFoundException;
 import com.cbfacademy.apiassessment.dto.PortfolioDTO;
 import com.cbfacademy.apiassessment.repository.PortfolioRepository;
@@ -73,6 +74,10 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     @Override
     public PortfolioDTO createPortfolio(PortfolioDTO portfolioDTO) {
+        if (portfolioRepository.existsById(portfolioDTO.getId())){
+            throw new PortfolioAlreadyExistsException("Portfolio with the same name already exists");
+            // Create a custom exception class 'PortfolioAlreadyExistsException' or use an existing one
+        }
         // convert DTO to entity
         Portfolio portfolio = mapToEntity(portfolioDTO);
 

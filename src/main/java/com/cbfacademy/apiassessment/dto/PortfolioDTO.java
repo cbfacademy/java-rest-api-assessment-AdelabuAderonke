@@ -1,17 +1,18 @@
 package com.cbfacademy.apiassessment.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+
 public class PortfolioDTO {
+    private long id;
     @NonNull
     private String portfolioName;
     @NonNull
