@@ -10,7 +10,7 @@
 <body>
 <h1>Portfolio App</h1>
 <button onclick="getAllPortfolios()">Get All Portfolios</button>
-<div class="container">
+<div class="container bg-dark">
     <h1 class="mt-4 mb-4">Stock Portfolios</h1>
 
     <table class="table table-dark table-striped">
@@ -20,6 +20,7 @@
             <th>Portfolio Name</th>
             <th>Description</th>
             <th>UserID</th>
+            <th></th>
 
         </tr>
         </thead>
@@ -35,14 +36,25 @@
                 .then(portfolios => displayPortfolios(portfolios))
                 .catch(error => console.error('Error:', error));
         }
+        function DeletePortfolio(){}
 
         function displayPortfolios(portfolios) {
             const portfolioList = document.getElementById('portfolioList');
             portfolios.forEach(portfolio => {
                 const portfolioItem = document.createElement('tr');
-                portfolioItem.innerHTML = `<td>${portfolio.id}</td> <td>${portfolio.portfolioName}</td> <td>${portfolio.description},<td>${portfolio.userId}</td>`;
+                portfolioItem.innerHTML = `<td>${portfolio.id}</td> <td>${portfolio.portfolioName}</td>
+                <td>${portfolio.description}</td><td>${portfolio.userId}</td>
+                <td class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success" onclick="viewInvestments(${portfolio.id})">Investments</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-primary">Add Investment</button>
+                </td>`;
                 portfolioList.appendChild(portfolioItem);
             });
+        }
+        function viewInvestments(portfolioId) {
+        window.location.href = `investments.html?id=${portfolioId}`;
+
         }
     </script>
 </body>
