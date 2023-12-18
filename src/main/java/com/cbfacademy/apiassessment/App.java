@@ -24,6 +24,6 @@ public class App {
 		SpringApplication.run(App.class, args);
 	}
 
-
+//http://localhost:8080/swagger-ui/index.html#/
 
 }

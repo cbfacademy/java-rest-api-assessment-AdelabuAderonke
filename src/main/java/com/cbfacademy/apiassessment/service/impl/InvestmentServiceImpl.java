@@ -56,6 +56,7 @@ public class InvestmentServiceImpl implements InvestmentService {
         double investmentAmount = investmentDTO.getPurchasePrice() * investmentDTO.getQuantity();
         investment.setInvestmentAmount(investmentAmount);
 
+
         double currentPrice = marketValueService.getCurrentMarketValue(investmentDTO.getSymbol());
         investment.setCurrentPrice(currentPrice);
         investment.setCurrentMarketValue(investmentDTO.getQuantity() * currentPrice);

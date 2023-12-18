@@ -62,13 +62,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     // mapToEntity
     private Portfolio mapToEntity(PortfolioDTO portfolioDTO) {
         Portfolio portfolio = mapper.map(portfolioDTO,Portfolio.class);
-//        portfolio.setPortfolioName(portfolioDTO.getPortfolioName());
-//        portfolio.setDescription(portfolioDTO.getDescription());
-//        portfolio.setUserId(portfolioDTO.getUserId());
-//        portfolio.setId(portfolio.getId());
-//        // Set created_at with the current date
-//        portfolio.setCreatedAt(new Date());
-        return portfolio;
+       return portfolio;
 
     }
 

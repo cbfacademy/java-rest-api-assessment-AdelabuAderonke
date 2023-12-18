@@ -62,3 +62,28 @@ The Stock Portfolio Tracker is a Rest API that allows users to manage their inve
 
 7. **Alerts and Notifications (if implemented):**
    - Receive notifications for significant changes in your investments.
+
+**Implementation**
+-*Database*
+- This application uses MySql relational Database as well as a JSon file for storage.
+**installation**
+- To install MySQL, you can follow these general steps. The exact steps may vary depending on your operating system. Here, I'll provide instructions for popular operating systems like Windows, macOS.
+- **For Windows:**
+
+
+-Visit the official MySQL website: [MySQL Downloads](https://dev.mysql.com/downloads/).
+-Click on the "MySQL Installer for Windows" download link.
+-Download the MySQL Installer appropriate for your Windows version (32-bit or 64-bit).
+-Run the Installer:
+
+Once the installer is downloaded, run the installer executable.
+Choose the "Developer Default" setup type for a typical development environment. You can customize the setup if needed.
+-Configure MySQL Server:
+
+During installation, you'll be prompted to configure MySQL Server.
+Set a root password for MySQL.
+Choose a MySQL Server port (default is 3306).
+Complete the Installation:
+
+Follow the prompts to complete the installation.
+The installer will download and install MySQL Server and other necessary components.
