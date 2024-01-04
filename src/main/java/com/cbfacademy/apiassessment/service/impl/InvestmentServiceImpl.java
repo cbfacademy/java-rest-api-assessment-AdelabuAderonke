@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,6 +55,7 @@ public class InvestmentServiceImpl implements InvestmentService {
 
         double investmentAmount = investmentDTO.getPurchasePrice() * investmentDTO.getQuantity();
         investment.setInvestmentAmount(investmentAmount);
+
 
         double currentPrice = marketValueService.getCurrentMarketValue(investmentDTO.getSymbol());
         investment.setCurrentPrice(currentPrice);
@@ -96,42 +98,43 @@ public class InvestmentServiceImpl implements InvestmentService {
 
     @Override
     public InvestmentDTO updateInvestment(long portfolioId, long investmentId, InvestmentDTO investmentRequest) {
-        Portfolio portfolio = portfolioRepository.findById(portfolioId)
-                .orElseThrow(() -> new ResourceNotFoundException("Portfolio", "id", portfolioId));
-        //retrieve investment by Id
-        Investment investment = investmentRepository.findById(investmentId).orElseThrow(()-> new ResourceNotFoundException("Investment","id",investmentId));
-        if(investment.getPortfolio().getId() != portfolio.getId()){
-            throw new StockPortfolioAPIException(HttpStatus.BAD_REQUEST,"Investment does not belong to portfolio");
+        try {
+            Portfolio portfolio = portfolioRepository.findById(portfolioId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Portfolio", "id", portfolioId));
+
+            // retrieve investment by Id
+            Investment investment = investmentRepository.findById(investmentId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Investment", "id", investmentId));
+
+            if (investment.getPortfolio().getId() != portfolio.getId()) {
+                throw new StockPortfolioAPIException(HttpStatus.BAD_REQUEST, "Investment does not belong to portfolio");
+            }
+
+            investment.setName(investmentRequest.getName());
+            investment.setIssuer(investmentRequest.getIssuer());
+            investment.setSymbol(investmentRequest.getSymbol());
+            investment.setQuantity(investmentRequest.getQuantity());
+            investment.setPurchasePrice(investmentRequest.getPurchasePrice());
+
+            double investmentAmount = investmentRequest.getPurchasePrice() * investmentRequest.getQuantity();
+            investment.setInvestmentAmount(investmentAmount);
+
+            double currentPrice = marketValueService.getCurrentMarketValue(investmentRequest.getSymbol());
+            investment.setCurrentPrice(currentPrice);
+
+            investment.setCurrentMarketValue(investmentRequest.getQuantity() * currentPrice);
+
+            Investment  newUpdatedInvestment = investmentRepository.save(investment);
+            return mapToDTO(newUpdatedInvestment);
+        } catch (Exception e) {
+            // Log the exception
+            e.printStackTrace(); // replace with appropriate logging mechanism
+
+            // Rethrow the exception or handle it based on your application's needs
+            throw new StockPortfolioAPIException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating investment");
         }
-        investment.setName(investmentRequest.getName());
-        investment.setIssuer(investmentRequest.getIssuer());
-        investment.setSymbol(investmentRequest.getSymbol());
-        investment.setQuantity(investmentRequest.getQuantity());
-        investment.setPurchasePrice(investmentRequest.getPurchasePrice());
-//        double investmentAmount = investmentRequest.getPurchasePrice() * investmentRequest.getQuantity();
-//        investment.setInvestmentAmount(investmentAmount);
-//
-//        double currentPrice = marketValueService.getCurrentMarketValue(investmentRequest.getSymbol());
-//        if(currentPrice == 0){
-//            investment.setCurrentPrice(0);
-//        }
-//        investment.setCurrentPrice(currentPrice);
-//        investment.setCurrentMarketValue(investmentRequest.getQuantity() * currentPrice);
-
-        // Update JSON file
-//        for (InvestmentDTO investment1 : investments) {
-//            if (investment1.getId() == investmentId) {
-//                investment1.setName(investmentRequest.getName());
-//                investment1.setIssuer(investmentRequest.getIssuer());
-//                break;
-//            }
-//        }
-
-        Investment newUpdatedinvestment = investmentRepository.save(investment);
-        return mapToDTO(newUpdatedinvestment);
-
-
     }
+
 
     @Override
     public void deleteInvestment(long portfolioId, long investmentId) {
@@ -146,6 +149,9 @@ public class InvestmentServiceImpl implements InvestmentService {
     }
     public List<InvestmentDTO> searchInvestments(String query) {
         List<Investment> investmentList = investmentRepository.searchInvestments(query);
+        if(investmentList == null){
+            return null;
+        }
         return investmentList.stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
@@ -153,28 +159,11 @@ public class InvestmentServiceImpl implements InvestmentService {
 
     private InvestmentDTO mapToDTO(Investment investment) {
         InvestmentDTO investmentDTO = mapper.map(investment, InvestmentDTO.class);
-//        investmentDTO.setId(investment.getId());
-//        investmentDTO.setName(investment.getName());
-//        investmentDTO.setIssuer(investment.getIssuer());
-//        investmentDTO.setInvestmentAmount(investment.getInvestmentAmount());
-//        investmentDTO.setSymbol(investment.getSymbol());
-//        investmentDTO.setQuantity(investment.getQuantity());
-//        investmentDTO.setPurchasePrice(investment.getPurchasePrice());
-//        investmentDTO.setCurrentPrice(investment.getCurrentPrice());
-//        investmentDTO.setCurrentMarketValue(investment.getCurrentMarketValue());
         return investmentDTO;
     }
 
     private Investment mapToEntity(InvestmentDTO investmentDTO) {
         Investment investment = mapper.map(investmentDTO,Investment.class);
-//        investment.setName(investmentDTO.getName());
-//        investment.setIssuer(investmentDTO.getIssuer());
-//        investment.setInvestmentAmount(investmentDTO.getInvestmentAmount());
-//        investment.setCurrentPrice(investmentDTO.getCurrentPrice());
-//        investment.setCurrentMarketValue(investmentDTO.getCurrentMarketValue());
-//        investment.setSymbol(investmentDTO.getSymbol());
-//        investment.setQuantity(investmentDTO.getQuantity());
-//        investment.setPurchasePrice(investmentDTO.getPurchasePrice());
         return investment;
     }
 }

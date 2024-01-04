@@ -24,13 +24,19 @@ public class Portfolio {
 
     @Column(name = "name", unique = true, nullable = false)
     private String portfolioName;
-    @Column(name = "userId", unique = true, nullable = false)
+    @Column(name = "userId", nullable = false)
     private long userId;
-    @Column(name = "description", unique = true, nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
     @Column(name = "createdAt")
     private Date createdAt;
     @OneToMany(mappedBy = "portfolio",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Investment> investments = new HashSet<>();
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
+
 
 }

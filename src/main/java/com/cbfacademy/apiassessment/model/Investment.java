@@ -11,6 +11,7 @@ import java.util.Date;
 @Builder
 @Entity
 public class Investment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
